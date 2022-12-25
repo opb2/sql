@@ -1,0 +1,74 @@
+#include <iostream>
+#include <GL/gl.h>
+#include <GL/glut.h>
+
+int x,y,r,p,xc,yc;
+using namespace std;
+
+void display(){
+	x=0;
+	y=r;
+	xc=0;
+	yc=0;
+	p=1-r;
+	
+glClear(GL_COLOR_BUFFER_BIT);
+glBegin(GL_POINTS);
+
+	while(y>=x){
+	
+	if (p<0){
+		
+		x++;
+		p=p+(2*x)+3;
+//		glVertex2i(x,y);
+		cout<<x<<","<<y<<"\n";
+		}
+	else{
+		x++;
+		y--;
+		p=p+(2*(x-y))+5;
+//		glVertex2i(x,y);
+		cout<<x<<","<<y<<"\n";
+	}
+		glVertex2i(xc + x, yc + y);
+        glVertex2i(xc + y, yc + x);
+        glVertex2i(xc - y, yc + x);
+        glVertex2i(xc - x, yc + y);
+        glVertex2i(xc - x, yc - y);
+        glVertex2i(xc - y, yc - x);
+        glVertex2i(xc + y, yc - x);
+        glVertex2i(xc + x, yc - y);
+
+	
+}
+glEnd();
+glFlush();
+}
+
+void init(){
+	glClearColor(0,0,0,0);
+	glColor3f(1,0,0);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluOrtho2D(-200,200,-200,200);
+	
+	
+}
+
+
+int main(int argc, char** argv) {
+	
+	cout<<"enter radius";
+	cin>>r;
+	
+	glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE);
+	glutInitWindowSize(480,480);
+	glutInitWindowPosition(100,100);
+	glutCreateWindow("mid point circle");
+	glutDisplayFunc(display);
+	init();
+	glutMainLoop();
+	return 0;
+}
