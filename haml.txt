@@ -1,0 +1,92 @@
+#include<iostream>
+#include<GL/gl.h>
+#include<GL/glut.h>
+
+
+int x1,z1,x2,z2,d,dx,dy,m,a,b,c,e,x,y;
+using namespace std;
+
+void init(){
+	
+	glClearColor(0,0,0,0);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluOrtho2D(0,640,0,480);
+}
+
+void display(){
+	
+	glClear(GL_COLOR_BUFFER_BIT);
+	glBegin(GL_POINTS);
+	glColor3f(1,0,0);
+	
+	while (x1<x2 && z1<z2){
+		if (m<1){
+			if (d<0){
+				x1=x1+1;
+				d=d+a;
+				glVertex2i(x1,z1);
+				cout<<x1<<","<<z1<<"\n"	;
+			}
+			else{
+				x1=x1+1;
+				z1=z1+1;
+				d=d+b;
+				glVertex2i(x1,z1);
+				cout<<x1<<","<<z1<<"\n";
+			}
+			
+	}
+	else{
+		if (d<0){
+				z1=z1+1;
+				d=d+c;
+				glVertex2i(x1,z1);
+				cout<<x1<<","<<z1<<"\n";
+			}
+			else{
+				x1=x1+1;
+				z1=z1+1;
+				d=d+e;
+				glVertex2i(x1,z1);
+				cout<<x1<<","<<z1<<"\n";
+			}
+	}
+	
+	
+	
+}
+glEnd();
+glFlush();
+}
+
+
+int main(int argc, char** argv){
+	cout<<"enter x1 y1:";
+	cin>>x1>>z1;
+	cout<<"enter x2 y2:";
+	cin>>x2>>z2;
+	
+	dy=z2-z1;
+	dx=x2-x1;
+	m=dy/dx;
+	d=(2*dy)-dx;
+	
+	a=2*dy;
+	b=2*(dy)-dx;
+	c=2*dx;
+	e=2*(dx)-dy;     
+	
+	
+	
+	glutInit(&argc ,argv);
+	glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE);
+	glutInitWindowSize(640,480);
+	glutInitWindowPosition(100,100);
+	glutCreateWindow("bresenham algorithm");
+	glutDisplayFunc(display);
+	init();
+	glutMainLoop();
+	
+	return 0;
+}
